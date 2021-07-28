@@ -1,6 +1,6 @@
-package com.hexad.library.repository;
+package com.hexad.librarymanagement.repository;
 
-import com.hexad.library.domain.Book;
+import com.hexad.librarymanagement.domain.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

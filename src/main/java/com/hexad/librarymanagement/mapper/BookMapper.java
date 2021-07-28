@@ -1,8 +1,8 @@
-package com.hexad.library.mapper;
+package com.hexad.librarymanagement.mapper;
 
-import com.hexad.library.controller.response.BookResponse;
-import com.hexad.library.domain.Book;
-import com.hexad.library.service.BookDto;
+import com.hexad.librarymanagement.controller.response.BookResponse;
+import com.hexad.librarymanagement.domain.Book;
+import com.hexad.librarymanagement.service.BookDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

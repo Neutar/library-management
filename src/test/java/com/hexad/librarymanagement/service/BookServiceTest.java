@@ -1,14 +1,17 @@
-package com.hexad.library.service;
+package com.hexad.librarymanagement.service;
 
-import com.hexad.library.domain.Book;
-import com.hexad.library.repository.BookRepository;
+import com.hexad.librarymanagement.domain.Book;
+import com.hexad.librarymanagement.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,8 +45,8 @@ class BookServiceTest {
     @Test
     void getBooks_shouldReturnListOfAllBooks_whenThereAreBooks() {
         //given:
-        List<Book> bookList = Arrays.asList(buildBook("Stephen King", "The Shining", "lorem ipsum"),
-                buildBook("J. K. Rowling", "Harry Potter Goblet of Fire", "lorem ipsum 2"));
+        List<Book> bookList = Arrays.asList(buildBook("Stephen King", "The Shining", "9783785746042"),
+                buildBook("J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595"));
         when(bookRepository.findAll()).thenReturn(bookList);
 
         //when:
@@ -56,7 +59,7 @@ class BookServiceTest {
 
     }
 
-    private Book buildBook(String author, String bookName, String text) {
-        return Book.builder().id(UUID.randomUUID()).author(author).name(bookName).text(text).build();
+    private Book buildBook(String author, String bookName, String isbn) {
+        return Book.builder().id(UUID.randomUUID()).author(author).name(bookName).isbn(isbn).build();
     }
 }

@@ -1,9 +1,8 @@
-package com.hexad.library.controller;
+package com.hexad.librarymanagement.controller;
 
-
-import com.hexad.library.controller.response.BookResponse;
-import com.hexad.library.service.BookDto;
-import com.hexad.library.service.BookService;
+import com.hexad.librarymanagement.controller.response.BookResponse;
+import com.hexad.librarymanagement.service.BookDto;
+import com.hexad.librarymanagement.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,8 +45,8 @@ class BookControllerTest {
     @Test
     public void getBooks_shouldReturnAllBookList_whenThereAreBooks() {
         //given:
-        List<BookDto> bookDtoList = Arrays.asList(buildBookDto(UUID.randomUUID(), "Lord of the rings", "J.R.R. Tolkien", "lorem ipsum"),
-                buildBookDto(UUID.randomUUID(), "War and peace", "Leo Tolstoy", "lorem ipsum 2"));
+        List<BookDto> bookDtoList = Arrays.asList(buildBookDto(UUID.randomUUID(), "Lord of the rings", "J.R.R. Tolkien", "9780007141326"),
+                buildBookDto(UUID.randomUUID(), "War and peace", "Leo Tolstoy", "9783863523817"));
         when(bookService.getAllBooks()).thenReturn(bookDtoList);
 
         //when:
@@ -59,8 +58,8 @@ class BookControllerTest {
         assertThat(resultBookList).usingRecursiveFieldByFieldElementComparator().isEqualTo(bookDtoList);
     }
 
-    private BookDto buildBookDto(UUID id, String bookName, String author, String text) {
-        return BookDto.builder().id(id).name(bookName).author(author).text(text).build();
+    private BookDto buildBookDto(UUID id, String bookName, String author, String isbn) {
+        return BookDto.builder().id(id).name(bookName).author(author).isbn(isbn).build();
     }
 
 }

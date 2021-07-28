@@ -1,16 +1,20 @@
-package com.hexad.library.domain;
+package com.hexad.librarymanagement.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue
@@ -18,7 +22,7 @@ public class Book {
 
     private String name;
     private String author;
-    private String text;
+    private String isbn;
 
 }
 

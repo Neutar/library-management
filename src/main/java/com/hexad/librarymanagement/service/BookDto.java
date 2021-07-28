@@ -1,4 +1,4 @@
-package com.hexad.library.service;
+package com.hexad.librarymanagement.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +15,5 @@ public class BookDto {
     private UUID id;
     private String name;
     private String author;
-    private String text;
+    private String isbn;
 }

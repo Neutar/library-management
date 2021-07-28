@@ -1,4 +1,4 @@
-package com.hexad.library.controller.response;
+package com.hexad.librarymanagement.controller.response;
 
 import lombok.Data;
 
@@ -9,5 +9,5 @@ public class BookResponse {
     private UUID id;
     private String name;
     private String author;
-    private String text;
+    private String isbn;
 }

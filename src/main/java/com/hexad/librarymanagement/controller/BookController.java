@@ -1,8 +1,8 @@
-package com.hexad.library.controller;
+package com.hexad.librarymanagement.controller;
 
-import com.hexad.library.controller.response.BookResponse;
-import com.hexad.library.mapper.BookMapper;
-import com.hexad.library.service.BookService;
+import com.hexad.librarymanagement.controller.response.BookResponse;
+import com.hexad.librarymanagement.mapper.BookMapper;
+import com.hexad.librarymanagement.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
