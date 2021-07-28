@@ -8,9 +8,10 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService{
+    private BookRepository bookRepository;
 
     @Override
     public List<Book> getAllBooks() {
-        return null;
+        return bookRepository.findAll();
     }
 }
