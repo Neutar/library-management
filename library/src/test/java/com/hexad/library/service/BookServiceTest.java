@@ -30,7 +30,7 @@ class BookServiceTest {
         when(bookRepository.findAll()).thenReturn(Collections.emptyList());
 
         //when:
-        List<Book> bookList = bookService.getAllBooks();
+        List<BookDto> bookList = bookService.getAllBooks();
 
         //then:
         assertNotNull(bookList);
@@ -46,7 +46,7 @@ class BookServiceTest {
         when(bookRepository.findAll()).thenReturn(bookList);
 
         //when:
-        List<Book> resultBookList = bookService.getAllBooks();
+        List<BookDto> resultBookList = bookService.getAllBooks();
 
         //then:
         assertNotNull(resultBookList);
