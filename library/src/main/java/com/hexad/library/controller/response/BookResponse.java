@@ -1,13 +1,11 @@
-package com.hexad.library.service;
+package com.hexad.library.controller.response;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-@Builder
-public class BookDto {
+public class BookResponse {
     private UUID id;
     private String name;
     private String author;
