@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
@@ -51,7 +52,7 @@ class BookServiceTest {
         //then:
         assertNotNull(resultBookList);
         assertEquals(2, resultBookList.size());
-        assertEquals(bookList, resultBookList);
+        assertThat(resultBookList).usingRecursiveFieldByFieldElementComparator().isEqualTo(bookList);
 
     }
 

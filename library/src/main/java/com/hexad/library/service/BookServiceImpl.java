@@ -1,6 +1,6 @@
 package com.hexad.library.service;
 
-import com.hexad.library.domain.Book;
+import com.hexad.library.mapper.BookMapper;
 import com.hexad.library.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -8,11 +8,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService{
-    private BookRepository bookRepository;
+    private static final BookMapper bookMapper = BookMapper.BOOK_MAPPER;
+    private final BookRepository bookRepository;
 
     @Override
     public List<BookDto> getAllBooks() {
-        List<Book> all = bookRepository.findAll();
-        return null;
+        return bookMapper.mapBookDtoListFrom(bookRepository.findAll());
     }
 }
