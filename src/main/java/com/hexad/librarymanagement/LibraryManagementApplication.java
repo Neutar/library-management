@@ -1,4 +1,4 @@
-package com.example.librarymanagement;
+package com.hexad.librarymanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
