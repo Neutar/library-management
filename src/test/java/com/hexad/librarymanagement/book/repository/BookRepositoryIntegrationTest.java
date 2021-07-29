@@ -26,4 +26,12 @@ class BookRepositoryIntegrationTest extends IntegrationTestBase {
         assertEquals("J.R.R. Tolkien", books.get(0).getAuthor());
         assertEquals("9780007141326", books.get(0).getIsbn());
     }
+
+    @Test
+    @Sql(scripts = "/sql/add_borrowed_lotr_book.sql")
+    void findAllByBorrowedIsFalse_shouldReturnEmptyList_whenThereAllBooksBorrowed() {
+        List<Book> books = bookRepository.findAllByBorrowedIsFalse();
+
+        assertEquals(0, books.size());
+    }
 }

@@ -21,7 +21,8 @@ public class BookControllerIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    @Sql(scripts = "/sql/add_lotr_book.sql")
+    @Sql(scripts={"/sql/add_lotr_book.sql",
+            "/sql/add_borrowed_lotr_book.sql"})
     void getBooks_shouldReturnBookList_whenThereAreBooks() {
 
         ResponseEntity<BookResponse[]> response =

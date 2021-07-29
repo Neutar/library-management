@@ -18,6 +18,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAllBooks() {
-        return bookMapper.mapBookDtoListFrom(bookRepository.findAll());
+        return bookMapper.mapBookDtoListFrom(bookRepository.findAllByBorrowedIsFalse());
     }
 }
