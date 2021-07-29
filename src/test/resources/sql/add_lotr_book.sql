@@ -1,0 +1,1 @@
+insert into library_management.book (id,name,author,isbn) values ('a69fb94a-9d87-4e8c-bd86-2576be316454', 'Lord of the rings', 'J.R.R. Tolkien', '9780007141326');
