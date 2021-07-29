@@ -33,7 +33,7 @@ class BookServiceTest {
     @Test
     void getBooks_shouldReturnEmptyList_whenThereIsNoBook() {
         //given:
-        when(bookRepository.findAll()).thenReturn(Collections.emptyList());
+        when(bookRepository.findAllByBorrowedIsFalse()).thenReturn(Collections.emptyList());
 
         //when:
         List<BookDto> bookList = bookService.getAllBooks();
@@ -41,7 +41,7 @@ class BookServiceTest {
         //then:
         assertNotNull(bookList);
         assertEquals(0, bookList.size());
-        verify(bookRepository).findAll();
+        verify(bookRepository).findAllByBorrowedIsFalse();
     }
 
     @Test
@@ -49,7 +49,7 @@ class BookServiceTest {
         //given:
         List<Book> bookList = Arrays.asList(buildBook("Stephen King", "The Shining", "9783785746042"),
                 buildBook("J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595"));
-        when(bookRepository.findAll()).thenReturn(bookList);
+        when(bookRepository.findAllByBorrowedIsFalse()).thenReturn(bookList);
 
         //when:
         List<BookDto> resultBookList = bookService.getAllBooks();

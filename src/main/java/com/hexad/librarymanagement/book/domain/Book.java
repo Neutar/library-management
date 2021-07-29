@@ -26,7 +26,7 @@ public class Book {
     private boolean borrowed;
 
     public void borrowBook() {
-
+        setBorrowed(true);
     }
 }
 
