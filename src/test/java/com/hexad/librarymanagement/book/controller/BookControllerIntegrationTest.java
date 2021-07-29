@@ -1,7 +1,7 @@
-package com.hexad.librarymanagement.controller;
+package com.hexad.librarymanagement.book.controller;
 
 import com.hexad.librarymanagement.common.IntegrationTestBase;
-import com.hexad.librarymanagement.controller.response.BookResponse;
+import com.hexad.librarymanagement.book.controller.response.BookResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;

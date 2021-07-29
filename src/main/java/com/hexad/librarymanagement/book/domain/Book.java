@@ -1,4 +1,4 @@
-package com.hexad.librarymanagement.domain;
+package com.hexad.librarymanagement.book.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +23,10 @@ public class Book {
     private String name;
     private String author;
     private String isbn;
+    private boolean borrowed;
 
+    public void borrowBook() {
+
+    }
 }
 

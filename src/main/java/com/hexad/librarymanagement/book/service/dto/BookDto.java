@@ -1,4 +1,4 @@
-package com.hexad.librarymanagement.service;
+package com.hexad.librarymanagement.book.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

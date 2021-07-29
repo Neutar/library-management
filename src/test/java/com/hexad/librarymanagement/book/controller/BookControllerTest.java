@@ -1,8 +1,8 @@
-package com.hexad.librarymanagement.controller;
+package com.hexad.librarymanagement.book.controller;
 
-import com.hexad.librarymanagement.controller.response.BookResponse;
-import com.hexad.librarymanagement.service.BookDto;
-import com.hexad.librarymanagement.service.BookService;
+import com.hexad.librarymanagement.book.controller.response.BookResponse;
+import com.hexad.librarymanagement.book.service.dto.BookDto;
+import com.hexad.librarymanagement.book.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

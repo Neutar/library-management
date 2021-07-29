@@ -1,4 +1,4 @@
-package com.hexad.librarymanagement.controller.response;
+package com.hexad.librarymanagement.book.controller.response;
 
 import lombok.Data;
 

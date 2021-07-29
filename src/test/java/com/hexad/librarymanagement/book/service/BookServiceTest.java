@@ -1,7 +1,9 @@
-package com.hexad.librarymanagement.service;
+package com.hexad.librarymanagement.book.service;
 
-import com.hexad.librarymanagement.domain.Book;
-import com.hexad.librarymanagement.repository.BookRepository;
+import com.hexad.librarymanagement.book.domain.Book;
+import com.hexad.librarymanagement.book.repository.BookRepository;
+import com.hexad.librarymanagement.book.service.dto.BookDto;
+import com.hexad.librarymanagement.book.service.impl.BookServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,8 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
+import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -59,7 +61,4 @@ class BookServiceTest {
 
     }
 
-    private Book buildBook(String author, String bookName, String isbn) {
-        return Book.builder().id(UUID.randomUUID()).author(author).name(bookName).isbn(isbn).build();
-    }
 }
