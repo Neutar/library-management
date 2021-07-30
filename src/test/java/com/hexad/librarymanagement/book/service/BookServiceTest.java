@@ -34,7 +34,7 @@ class BookServiceTest {
     @Test
     void getBooks_shouldReturnEmptyList_whenThereIsNoBook() {
         //given:
-        when(bookRepository.findAllByBorrowedIsFalse()).thenReturn(Collections.emptyList());
+        when(bookRepository.findAllByCopyCountGreaterThan(0L)).thenReturn(Collections.emptyList());
 
         //when:
         List<BookDto> bookList = bookService.getAllBooks();
@@ -42,15 +42,15 @@ class BookServiceTest {
         //then:
         assertNotNull(bookList);
         assertEquals(0, bookList.size());
-        verify(bookRepository).findAllByBorrowedIsFalse();
+        verify(bookRepository).findAllByCopyCountGreaterThan(0L);
     }
 
     @Test
     void getBooks_shouldReturnListOfAllBooks_whenThereAreBooks() {
         //given:
-        List<Book> bookList = Arrays.asList(buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042"),
-                buildBook(UUID.randomUUID(), "J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595"));
-        when(bookRepository.findAllByBorrowedIsFalse()).thenReturn(bookList);
+        List<Book> bookList = Arrays.asList(buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042", 2L),
+                buildBook(UUID.randomUUID(), "J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595", 3L));
+        when(bookRepository.findAllByCopyCountGreaterThan(0L)).thenReturn(bookList);
 
         //when:
         List<BookDto> resultBookList = bookService.getAllBooks();
@@ -59,7 +59,8 @@ class BookServiceTest {
         assertNotNull(resultBookList);
         assertEquals(2, resultBookList.size());
         assertThat(resultBookList).usingRecursiveFieldByFieldElementComparator().isEqualTo(bookList);
-
+        verify(bookRepository).findAllByCopyCountGreaterThan(0L);
     }
+
 
 }

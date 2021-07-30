@@ -17,8 +17,8 @@ class BookRepositoryIntegrationTest extends IntegrationTestBase {
 
     @Test
     @Sql(scripts = "/sql/add_lotr_book.sql")
-    void findAllByBorrowedIsFalse_shouldReturn_whenThereIsBooksNotBorrowed() {
-        List<Book> books = bookRepository.findAllByBorrowedIsFalse();
+    void findAllByCopyCountGreaterThan_shouldReturnBookList_whenThereIsBooksNotBorrowed() {
+        List<Book> books = bookRepository.findAllByCopyCountGreaterThan(0L);
 
         assertEquals(1, books.size());
         assertEquals("a69fb94a-9d87-4e8c-bd86-2576be316454", books.get(0).getId().toString());
@@ -28,9 +28,10 @@ class BookRepositoryIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    @Sql(scripts = "/sql/add_borrowed_the_shining_book.sql")
-    void findAllByBorrowedIsFalse_shouldReturnEmptyList_whenThereAllBooksBorrowed() {
-        List<Book> books = bookRepository.findAllByBorrowedIsFalse();
+    @Sql(scripts = {"/sql/add_ron_weasley_user.sql",
+            "/sql/add_borrowed_the_shining_book.sql"})
+    void findAllByCopyCountGreaterThan_shouldReturnEmptyList_whenThereAllBooksBorrowed() {
+        List<Book> books = bookRepository.findAllByCopyCountGreaterThan(0L);
 
         assertEquals(0, books.size());
     }

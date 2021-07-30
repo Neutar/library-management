@@ -1,2 +1,2 @@
-insert into library_management.book (id,name,author,isbn,borrowed, user_id)
-values ('4ddf3d5e-9ed3-4c70-9438-31ed05404256', 'Harry Potter and the Goblet of Fire', 'J. K. Rowling', '9780439139595', true, 'eb7c0d14-e2b8-4108-b0e7-d139ce53bd0e');
+insert into library_management.book (id,name,author,isbn,copy_count, user_id)
+values ('4ddf3d5e-9ed3-4c70-9438-31ed05404256', 'Harry Potter and the Goblet of Fire', 'J. K. Rowling', '9780439139595', 0, 'eb7c0d14-e2b8-4108-b0e7-d139ce53bd0e');

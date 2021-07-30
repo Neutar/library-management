@@ -43,7 +43,7 @@ class UserControllerTest {
         List<BookResponse> bookResponseList = userController.borrowBook(userId, bookId);
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
         assertNotNull(bookResponseList);
         assertEquals(1, bookResponseList.size());
         assertThat(bookResponseList.get(0)).usingRecursiveComparison().isEqualTo(bookDto);
@@ -60,7 +60,7 @@ class UserControllerTest {
         assertThrows(BookNotFoundException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
     }
 
     @Test
@@ -74,7 +74,7 @@ class UserControllerTest {
         assertThrows(ExceededBorrowedBookLimitException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
     }
 
     @Test
@@ -85,9 +85,9 @@ class UserControllerTest {
         when(userService.borrowBook(userId,bookId)).thenThrow(UserNotFoundException.class);
 
         //when:
-        assertThrows(BookNotFoundException.class, () -> userController.borrowBook(userId, bookId));
+        assertThrows(UserNotFoundException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
     }
 }

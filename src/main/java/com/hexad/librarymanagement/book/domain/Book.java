@@ -1,5 +1,6 @@
 package com.hexad.librarymanagement.book.domain;
 
+import com.hexad.librarymanagement.book.exception.BookNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,10 +24,13 @@ public class Book {
     private String name;
     private String author;
     private String isbn;
-    private boolean borrowed;
+    private Long copyCount;
 
     public void borrowBook() {
-        setBorrowed(true);
+        if(copyCount == 0) {
+            throw new BookNotFoundException();
+        }
+        copyCount--;
     }
 }
 
