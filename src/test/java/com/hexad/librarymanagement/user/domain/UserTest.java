@@ -6,10 +6,8 @@ import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookExcepti
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.UUID;
 
-import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static com.hexad.librarymanagement.utils.TestUtils.buildUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -68,7 +66,7 @@ class UserTest {
         when(book.getId()).thenReturn(UUID.randomUUID());
 
         //when:
-        user.removeBook(book);
+        user.returnBook(book);
 
         //then:
         assertEquals(0, user.getBorrowedBookList().size());
@@ -82,7 +80,7 @@ class UserTest {
         when(book.getId()).thenReturn(UUID.randomUUID());
 
         //when:
-        assertThrows(BookNotBorrowedException.class, () -> user.removeBook(book));
+        assertThrows(BookNotBorrowedException.class, () -> user.returnBook(book));
 
         //then:
         verifyNoInteractions(book);

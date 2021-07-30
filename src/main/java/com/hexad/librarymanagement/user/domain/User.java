@@ -47,7 +47,7 @@ public class User {
         book.borrowBook();
     }
 
-    public void removeBook(Book book) {
+    public void returnBook(Book book) {
         if (borrowedBookList.stream()
                 .map(Book::getId)
                 .noneMatch(borrowed -> borrowed.equals(book.getId()))) {

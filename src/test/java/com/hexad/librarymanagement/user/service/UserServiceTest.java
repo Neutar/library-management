@@ -154,8 +154,8 @@ class UserServiceTest {
         //then:
         assertNotNull(resultBookList);
         assertEquals(0, resultBookList.size());
-        verify(user).removeBook(book1);
-        verify(user).removeBook(book2);
+        verify(user).returnBook(book1);
+        verify(user).returnBook(book2);
         verify(userRepository).save(user);
     }
 
@@ -167,12 +167,12 @@ class UserServiceTest {
         UUID bookId1 = UUID.randomUUID();
         UUID bookId2 = UUID.randomUUID();
         List<UUID> bookIdList = Arrays.asList(bookId1, bookId2);
-        Book book1 = buildBook(bookId1, "Harry Potter and the Goblet of Fire", "J. K. Rowling", "9780439139595", 5L);
-        Book book2 = buildBook(bookId2, "Lord of the rings", "J.R.R. Tolkien", "9780007141326", 2L);
+        Book book1 = mock(Book.class);
+        Book book2 = mock(Book.class);
         List<Book> bookList = Arrays.asList(book1, book2);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findAllById(bookIdList)).thenReturn(bookList);
-        when(user.getBorrowedBookList()).thenReturn(Collections.emptyList());
+        doThrow(BookNotBorrowedException.class).when(user).returnBook(book1);
 
         //when:
         assertThrows(BookNotBorrowedException.class, () -> userService.returnBook(userId, bookIdList));
