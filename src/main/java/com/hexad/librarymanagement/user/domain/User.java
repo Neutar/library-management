@@ -26,8 +26,10 @@ public class User {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "LIBRARY_USER_BOOK", joinColumns =
+    @JoinColumn(name = "library_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> borrowedBookList = new ArrayList<>();
 
     public void borrowBook(Book book) {
