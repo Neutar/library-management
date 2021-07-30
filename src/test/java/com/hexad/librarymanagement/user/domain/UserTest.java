@@ -1,11 +1,13 @@
 package com.hexad.librarymanagement.user.domain;
 
 import com.hexad.librarymanagement.book.domain.Book;
+import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static com.hexad.librarymanagement.utils.TestUtils.buildUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,5 +40,17 @@ class UserTest {
 
         //then:
         verifyNoInteractions(book);
+    }
+
+
+    @Test
+    void borrowBook_shouldReturnAlreadyBorrowedSameBookException_whenUsersBorrowListContainsSameBook() {
+        //given:
+        Book lotr = buildBook(UUID.randomUUID(), "J.R.R. Tolkien", "Lord of the rings", "9780007141326", 7L);
+        User user = buildUser(UUID.randomUUID(), "Ron Weasley", lotr);
+
+        //when:
+        assertThrows(AlreadyBorrowedSameBookException.class,() -> user.borrowBook(lotr));
+
     }
 }

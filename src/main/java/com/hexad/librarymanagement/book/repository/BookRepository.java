@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BookRepository extends JpaRepository<Book, UUID> {
-    List<Book> findAllByBorrowedIsFalse();
+
+    List<Book> findAllByCopyCountGreaterThan(Long copyCountNumber);
 }

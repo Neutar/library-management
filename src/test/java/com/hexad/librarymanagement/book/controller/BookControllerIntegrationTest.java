@@ -21,7 +21,8 @@ public class BookControllerIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    @Sql(scripts={"/sql/add_lotr_book.sql",
+    @Sql(scripts={"/sql/add_ron_weasley_user.sql",
+            "/sql/add_lotr_book.sql",
             "/sql/add_borrowed_the_shining_book.sql"})
     void getBooks_shouldReturnBookList_whenThereAreBooks() {
 

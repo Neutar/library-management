@@ -1,6 +1,7 @@
 package com.hexad.librarymanagement.user.domain;
 
 import com.hexad.librarymanagement.book.domain.Book;
+import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,13 +27,18 @@ public class User {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "LIBRARY_USER_BOOK",
+            joinColumns = @JoinColumn(name = "library_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> borrowedBookList = new ArrayList<>();
 
     public void borrowBook(Book book) {
         if (borrowedBookList.size() >= BORROWING_LIMIT) {
             throw new ExceededBorrowedBookLimitException();
+        }
+        if (borrowedBookList.stream().anyMatch(borrowed-> borrowed.getId().equals(book.getId()))) {
+            throw new AlreadyBorrowedSameBookException();
         }
         borrowedBookList.add(book);
         book.borrowBook();

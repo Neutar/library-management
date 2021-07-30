@@ -21,6 +21,6 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<BookDto> getAllBooks() {
-        return bookMapper.mapBookDtoListFrom(bookRepository.findAllByBorrowedIsFalse());
+        return bookMapper.mapBookDtoListFrom(bookRepository.findAllByCopyCountGreaterThan(0L));
     }
 }

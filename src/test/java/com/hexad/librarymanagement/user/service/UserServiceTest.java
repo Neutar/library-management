@@ -5,6 +5,7 @@ import com.hexad.librarymanagement.book.exception.BookNotFoundException;
 import com.hexad.librarymanagement.book.repository.BookRepository;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import com.hexad.librarymanagement.user.domain.User;
+import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
 import com.hexad.librarymanagement.user.repository.UserRepository;
@@ -38,7 +39,7 @@ class UserServiceTest {
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
         User user = mock(User.class);
-        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042");
+        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042", 2L);
         when(user.getBorrowedBookList()).thenReturn(Collections.singletonList(book));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
@@ -69,6 +70,7 @@ class UserServiceTest {
         verify(userRepository).findById(userId);
         verify(bookRepository).findById(bookId);
         verifyNoInteractions(user);
+        verifyNoMoreInteractions(userRepository);
     }
 
     @Test
@@ -76,7 +78,7 @@ class UserServiceTest {
         //given:
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
-        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042");
+        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042", 2L);
         User user = mock(User.class);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
@@ -88,6 +90,28 @@ class UserServiceTest {
         //then:
         verify(userRepository).findById(userId);
         verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(userRepository);
+
+    }
+
+    @Test
+    public void borrowBook_shouldReturnAlreadyBorrowedSameBookException_whenUsersBorrowSameBookAgain(){
+        //given:
+        UUID userId = UUID.randomUUID();
+        UUID bookId = UUID.randomUUID();
+        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042", 2L);
+        User user = mock(User.class);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+        doThrow(AlreadyBorrowedSameBookException.class).when(user).borrowBook(book);
+
+        //when:
+        assertThrows(AlreadyBorrowedSameBookException.class, () -> userService.borrowBook(userId, bookId));
+
+        //then:
+        verify(userRepository).findById(userId);
+        verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(userRepository);
 
     }
 
@@ -104,5 +128,6 @@ class UserServiceTest {
         //then:
         verify(userRepository).findById(userId);
         verifyNoInteractions(bookRepository);
+        verifyNoMoreInteractions(userRepository);
     }
 }

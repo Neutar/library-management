@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static com.hexad.librarymanagement.utils.TestUtils.buildBookDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -56,10 +57,6 @@ class BookControllerTest {
         assertNotNull(resultBookList);
         assertEquals(2, resultBookList.size());
         assertThat(resultBookList).usingRecursiveFieldByFieldElementComparator().isEqualTo(bookDtoList);
-    }
-
-    private BookDto buildBookDto(UUID id, String bookName, String author, String isbn) {
-        return BookDto.builder().id(id).name(bookName).author(author).isbn(isbn).build();
     }
 
 }

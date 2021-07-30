@@ -4,6 +4,7 @@ package com.hexad.librarymanagement.user.controller;
 import com.hexad.librarymanagement.book.controller.response.BookResponse;
 import com.hexad.librarymanagement.book.exception.BookNotFoundException;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
+import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
 import com.hexad.librarymanagement.user.service.UserService;
@@ -43,7 +44,7 @@ class UserControllerTest {
         List<BookResponse> bookResponseList = userController.borrowBook(userId, bookId);
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
         assertNotNull(bookResponseList);
         assertEquals(1, bookResponseList.size());
         assertThat(bookResponseList.get(0)).usingRecursiveComparison().isEqualTo(bookDto);
@@ -60,7 +61,7 @@ class UserControllerTest {
         assertThrows(BookNotFoundException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
     }
 
     @Test
@@ -74,7 +75,7 @@ class UserControllerTest {
         assertThrows(ExceededBorrowedBookLimitException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
     }
 
     @Test
@@ -85,9 +86,23 @@ class UserControllerTest {
         when(userService.borrowBook(userId,bookId)).thenThrow(UserNotFoundException.class);
 
         //when:
-        assertThrows(BookNotFoundException.class, () -> userController.borrowBook(userId, bookId));
+        assertThrows(UserNotFoundException.class, () -> userController.borrowBook(userId, bookId));
 
         //then:
-        verify(userService).borrowBook(bookId, userId);
+        verify(userService).borrowBook(userId, bookId);
+    }
+
+    @Test
+    void borrowBook_shouldReturnAlreadyBorrowedSameBookException_whenUserBorrowedBookAlready() {
+        //given:
+        UUID userId = UUID.randomUUID();
+        UUID bookId = UUID.randomUUID();
+        when(userService.borrowBook(userId,bookId)).thenThrow(AlreadyBorrowedSameBookException.class);
+
+        //when:
+        assertThrows(AlreadyBorrowedSameBookException.class, () -> userController.borrowBook(userId, bookId));
+
+        //then:
+        verify(userService).borrowBook(userId, bookId);
     }
 }
