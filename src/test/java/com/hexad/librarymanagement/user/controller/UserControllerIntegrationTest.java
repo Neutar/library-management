@@ -71,7 +71,7 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
             "/sql/add_lotr_book.sql",
             "/sql/add_borrowed_harry_potter_book.sql",
             "/sql/add_borrowed_the_shining_book.sql"})
-    void getBooks_shouldReturnBadRequest_whenUserAlreadyBookTwoBook() {
+    void getBooks_shouldReturnBadRequest_whenUserAlreadyBorrowedTwoBook() {
         ResponseEntity<ErrorResponse> response =
                 restTemplate.exchange(
                         "http://localhost:" + port + "/api/user/eb7c0d14-e2b8-4108-b0e7-d139ce53bd0e/book/a69fb94a-9d87-4e8c-bd86-2576be316454",
@@ -81,5 +81,21 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         ErrorResponse body = response.getBody();
         assertEquals("BORROWING_LIMIT_EXCEEDED", body.getMessage());
+    }
+
+    @Test
+    @Sql(scripts={"/sql/add_ron_weasley_user.sql",
+            "/sql/add_lotr_book.sql",
+            "/sql/add_borrowed_the_shining_book.sql"})
+    void getBooks_shouldReturnBadRequest_whenUserAlreadyBorrowedSameBook() {
+        ResponseEntity<ErrorResponse> response =
+                restTemplate.exchange(
+                        "http://localhost:" + port + "/api/user/eb7c0d14-e2b8-4108-b0e7-d139ce53bd0e/book/23b62398-82b4-4d81-8704-343e8388fdab",
+                        HttpMethod.PUT,
+                        null,
+                        ErrorResponse.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        ErrorResponse body = response.getBody();
+        assertEquals("ALREADY_BORROWED_SAME_BOOK", body.getMessage());
     }
 }
