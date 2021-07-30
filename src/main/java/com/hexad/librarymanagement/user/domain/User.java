@@ -25,7 +25,7 @@ public class User {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     private List<Book> borrowedBookList = new ArrayList<>();
 

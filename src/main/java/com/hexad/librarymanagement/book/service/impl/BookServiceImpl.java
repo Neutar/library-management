@@ -7,6 +7,8 @@ import com.hexad.librarymanagement.book.service.BookService;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<BookDto> getAllBooks() {
         return bookMapper.mapBookDtoListFrom(bookRepository.findAllByBorrowedIsFalse());
     }

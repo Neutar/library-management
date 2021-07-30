@@ -15,9 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +39,7 @@ class UserServiceTest {
         UUID bookId = UUID.randomUUID();
         User user = mock(User.class);
         Book book = buildBook("Stephen King", "The Shining", "9783785746042");
+        when(user.getBorrowedBookList()).thenReturn(Collections.singletonList(book));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 
@@ -88,7 +87,7 @@ class UserServiceTest {
 
         //then:
         verify(userRepository).findById(userId);
-        verify(bookRepository.findById(bookId));
+        verify(bookRepository).findById(bookId);
 
     }
 
