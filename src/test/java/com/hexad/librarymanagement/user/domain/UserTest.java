@@ -73,7 +73,7 @@ class UserTest {
     }
 
     @Test
-    public void returnBook_shouldThrowBookNotBorrowedException_whenTheReturnedBookIdListNotExistsInBorrowedList(){
+    void returnBook_shouldThrowBookNotBorrowedException_whenTheReturnedBookIdListNotExistsInBorrowedList(){
         //given:
         Book book = mock(Book.class);
         User user = buildUser(UUID.randomUUID(), "Professor Albus Dumbledore");
