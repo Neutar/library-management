@@ -147,7 +147,7 @@ class UserControllerTest {
         assertThrows(BookNotFoundException.class, () -> userController.returnBook(userId, Collections.singletonList(bookId)));
 
         //then:
-        verify(userService).borrowBook(userId, bookId);
+        verify(userService).returnBook(userId, Collections.singletonList(bookId));
     }
 
 
@@ -156,13 +156,13 @@ class UserControllerTest {
         //given:
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
-        when(userService.returnBook(userId, Collections.singletonList(bookId))).thenThrow(BookNotFoundException.class);
+        when(userService.returnBook(userId, Collections.singletonList(bookId))).thenThrow(UserNotFoundException.class);
 
         //when:
         assertThrows(UserNotFoundException.class, () -> userController.returnBook(userId, Collections.singletonList(bookId)));
 
         //then:
-        verify(userService).borrowBook(userId, bookId);
+        verify(userService).returnBook(userId, Collections.singletonList(bookId));
     }
 
 }

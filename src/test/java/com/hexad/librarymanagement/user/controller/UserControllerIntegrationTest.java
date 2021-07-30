@@ -146,7 +146,7 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
         assertNotNull(errorResponse);
         assertEquals("BOOK_NOT_BORROWED", errorResponse.getMessage());
         assertBookCopyCount(UUID.fromString("4ddf3d5e-9ed3-4c70-9438-31ed05404256"), 0L);
-        assertBookCopyCount(UUID.fromString("a69fb94a-9d87-4e8c-bd86-2576be316454"), 1L);
+        assertBookCopyCount(UUID.fromString("a69fb94a-9d87-4e8c-bd86-2576be316454"), 9L);
     }
 
     @Test
@@ -160,7 +160,6 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         ErrorResponse body = response.getBody();
         assertEquals("USER_NOT_FOUND", body.getMessage());
-        assertBookCopyCount(UUID.fromString("4ddf3d5e-9ed3-4c70-9438-31ed05404256"), 0L);
     }
 
     @Test
@@ -177,7 +176,6 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         ErrorResponse body = response.getBody();
         assertEquals("BOOK_NOT_FOUND", body.getMessage());
-        assertBookCopyCount(UUID.fromString("4ddf3d5e-9ed3-4c70-9438-31ed05404256"), 0L);
     }
 
     private void assertBookCopyCount(UUID bookId, Long count) {

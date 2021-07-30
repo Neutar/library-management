@@ -170,6 +170,8 @@ class UserServiceTest {
         Book book1 = mock(Book.class);
         Book book2 = mock(Book.class);
         List<Book> bookList = Arrays.asList(book1, book2);
+        when(book1.getId()).thenReturn(bookId1);
+        when(book2.getId()).thenReturn(bookId2);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findAllById(bookIdList)).thenReturn(bookList);
         doThrow(BookNotBorrowedException.class).when(user).returnBook(book1);

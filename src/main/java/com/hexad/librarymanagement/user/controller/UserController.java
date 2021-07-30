@@ -28,6 +28,6 @@ public class UserController {
 
     @PostMapping("/{userId}/book/return")
     public List<BookResponse> returnBook(@PathVariable UUID userId, @RequestBody List<UUID> bookIds) {
-        return null;
+        return bookMapper.mapBookResponseListFrom(userService.returnBook(userId, bookIds));
     }
 }

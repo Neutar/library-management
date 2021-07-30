@@ -42,6 +42,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         List<Book> books = bookRepository.findAllById(bookIdList);
+        if(bookIdList.stream().anyMatch(id -> books.stream().map(Book::getId).noneMatch(bookId-> bookId.equals(id)))) {
+            throw new BookNotFoundException();
+        }
         books.forEach(user::returnBook);
         userRepository.save(user);
         return bookMapper.mapBookDtoListFrom(user.getBorrowedBookList());
