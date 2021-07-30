@@ -1,6 +1,7 @@
 package com.hexad.librarymanagement.user.domain;
 
 import com.hexad.librarymanagement.book.domain.Book;
+import com.hexad.librarymanagement.book.exception.BookNotBorrowedException;
 import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import lombok.AllArgsConstructor;
@@ -37,10 +38,22 @@ public class User {
         if (borrowedBookList.size() >= BORROWING_LIMIT) {
             throw new ExceededBorrowedBookLimitException();
         }
-        if (borrowedBookList.stream().anyMatch(borrowed-> borrowed.getId().equals(book.getId()))) {
+        if (borrowedBookList.stream()
+                .map(Book::getId)
+                .anyMatch(borrowed -> borrowed.equals(book.getId()))) {
             throw new AlreadyBorrowedSameBookException();
         }
         borrowedBookList.add(book);
         book.borrowBook();
+    }
+
+    public void removeBook(Book book) {
+        if (borrowedBookList.stream()
+                .map(Book::getId)
+                .noneMatch(borrowed -> borrowed.equals(book.getId()))) {
+            throw new BookNotBorrowedException();
+        }
+        borrowedBookList.remove(book);
+        book.returnBook();
     }
 }

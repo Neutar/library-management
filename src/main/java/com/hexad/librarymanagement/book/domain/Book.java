@@ -1,10 +1,7 @@
 package com.hexad.librarymanagement.book.domain;
 
 import com.hexad.librarymanagement.book.exception.BookNotFoundException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +28,10 @@ public class Book {
             throw new BookNotFoundException();
         }
         copyCount--;
+    }
+
+    public void returnBook() {
+        copyCount++;
     }
 }
 

@@ -36,4 +36,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return bookMapper.mapBookDtoListFrom(user.getBorrowedBookList());
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<BookDto> returnBook(UUID userId, List<UUID> bookIdList) {
+        return null;
+    }
 }
