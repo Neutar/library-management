@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestUtils {
     public static Book buildBook(UUID id, String author, String bookName, String isbn, Long copyCount) {
-        return Book.builder().id(UUID.randomUUID()).author(author).name(bookName).isbn(isbn).copyCount(copyCount).build();
+        return Book.builder().id(id).author(author).name(bookName).isbn(isbn).copyCount(copyCount).build();
     }
 
     public static BookDto buildBookDto(UUID id, String author, String bookName, String isbn) {
