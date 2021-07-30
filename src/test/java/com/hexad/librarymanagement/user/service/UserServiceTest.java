@@ -38,7 +38,7 @@ class UserServiceTest {
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
         User user = mock(User.class);
-        Book book = buildBook("Stephen King", "The Shining", "9783785746042");
+        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042");
         when(user.getBorrowedBookList()).thenReturn(Collections.singletonList(book));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
@@ -76,7 +76,7 @@ class UserServiceTest {
         //given:
         UUID userId = UUID.randomUUID();
         UUID bookId = UUID.randomUUID();
-        Book book = buildBook("Stephen King", "The Shining", "9783785746042");
+        Book book = buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042");
         User user = mock(User.class);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));

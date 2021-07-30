@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,8 +48,8 @@ class BookServiceTest {
     @Test
     void getBooks_shouldReturnListOfAllBooks_whenThereAreBooks() {
         //given:
-        List<Book> bookList = Arrays.asList(buildBook("Stephen King", "The Shining", "9783785746042"),
-                buildBook("J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595"));
+        List<Book> bookList = Arrays.asList(buildBook(UUID.randomUUID(), "Stephen King", "The Shining", "9783785746042"),
+                buildBook(UUID.randomUUID(), "J. K. Rowling", "Harry Potter Goblet of Fire", "9780439139595"));
         when(bookRepository.findAllByBorrowedIsFalse()).thenReturn(bookList);
 
         //when:

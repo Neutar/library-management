@@ -1,4 +1,11 @@
 package com.hexad.librarymanagement.book.exception;
 
-public class BookNotFoundException extends RuntimeException{
+import com.hexad.librarymanagement.common.exception.NotFoundException;
+
+public class BookNotFoundException extends NotFoundException {
+    private static final String MESSAGE = "BOOK_NOT_FOUND";
+
+    public BookNotFoundException() {
+        super(MESSAGE);
+    }
 }

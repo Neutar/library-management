@@ -28,7 +28,7 @@ class BookRepositoryIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    @Sql(scripts = "/sql/add_borrowed_lotr_book.sql")
+    @Sql(scripts = "/sql/add_borrowed_the_shining_book.sql")
     void findAllByBorrowedIsFalse_shouldReturnEmptyList_whenThereAllBooksBorrowed() {
         List<Book> books = bookRepository.findAllByBorrowedIsFalse();
 

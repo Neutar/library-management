@@ -15,7 +15,7 @@ class UserTest {
     @Test
     void borrowBook_shouldAddBookToBorrowedList_whenThereIsNoBookBorrowed() {
         //given:
-        User user = buildUser(UUID.randomUUID(), "Ron Weasly");
+        User user = buildUser(UUID.randomUUID(), "Ron Weasley");
         Book book = mock(Book.class);
 
         //when:
@@ -30,7 +30,7 @@ class UserTest {
     @Test
     void borrowBook_shouldReturnExceededBorrowLimitException_whenUsersBorrowLimitExceeds() {
         //given:
-        User user = buildUser(UUID.randomUUID(), "Ron Weasly", mock(Book.class), mock(Book.class));
+        User user = buildUser(UUID.randomUUID(), "Ron Weasley", mock(Book.class), mock(Book.class));
         Book book = mock(Book.class);
 
         //when:
