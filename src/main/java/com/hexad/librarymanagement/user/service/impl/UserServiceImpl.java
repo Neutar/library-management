@@ -7,6 +7,7 @@ import com.hexad.librarymanagement.book.repository.BookRepository;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import com.hexad.librarymanagement.user.domain.User;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
+import com.hexad.librarymanagement.user.mapper.UserMapper;
 import com.hexad.librarymanagement.user.repository.UserRepository;
 import com.hexad.librarymanagement.user.service.UserService;
 import com.hexad.librarymanagement.user.service.dto.UserDto;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final BookMapper bookMapper = BookMapper.BOOK_MAPPER;
+    private static final UserMapper userMapper = UserMapper.USER_MAPPER;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
@@ -52,7 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<UserDto> getAllUsers() {
-        return null;
+        return userMapper.mapUserDtoListFrom(userRepository.findAll());
     }
 }

@@ -3,6 +3,7 @@ package com.hexad.librarymanagement.user.controller;
 import com.hexad.librarymanagement.book.controller.response.BookResponse;
 import com.hexad.librarymanagement.book.mapper.BookMapper;
 import com.hexad.librarymanagement.user.controller.response.UserResponse;
+import com.hexad.librarymanagement.user.mapper.UserMapper;
 import com.hexad.librarymanagement.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private static final BookMapper bookMapper = BookMapper.BOOK_MAPPER;
+    private static final UserMapper userMapper = UserMapper.USER_MAPPER;
     private final UserService userService;
 
     @PutMapping("/{userId}/book/{bookId}")
@@ -30,6 +32,6 @@ public class UserController {
 
     @GetMapping
     public List<UserResponse> getAllUsers() {
-        return null;
+        return userMapper.mapUserResponseListFrom(userService.getAllUsers());
     }
 }

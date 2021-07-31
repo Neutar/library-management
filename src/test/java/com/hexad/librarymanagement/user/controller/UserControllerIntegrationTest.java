@@ -192,7 +192,6 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
                         "http://localhost:" + port + "/api/user",
                         UserResponse[].class);
         UserResponse[] users = response.getBody();
-        assertNull(users);
         assertEquals(0, users.length);
     }
 
