@@ -4,8 +4,6 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASS:-123456}
-    volumes:
-      - "${POSTGRES_DATA_PATH:-/postgres_data}:/var/lib/postgresql/data"
     ports:
       - 5432:5432
 
@@ -22,6 +20,7 @@ services:
       DB_HOST: postgres_db
       BOOK_TEST_DATA_PATH: /initialBooks.json
       USER_TEST_DATA_PATH: /initialUsers.json
+      POSTGRES_PASS: ${POSTGRES_PASS:-123456}
     volumes:
       - "${INITIAL_BOOKS_DATA_PATH:-./initialBooks.json}:/initialBooks.json"
       - "${INITIAL_USERS_DATA_PATH:-./initialUsers.json}:/initialUsers.json"
