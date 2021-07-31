@@ -20,3 +20,9 @@ spring:
   flyway:
     enabled: true
     schemas: library_management
+initial:
+  test:
+    data:
+      path:
+        book: ${BOOK_TEST_DATA_PATH:-}
+        user: ${USER_TEST_DATA_PATH:-}

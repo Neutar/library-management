@@ -20,5 +20,10 @@ services:
       dockerfile: docker/Dockerfile
     environment:
       DB_HOST: postgres_db
+      BOOK_TEST_DATA_PATH: /initialBooks.json
+      USER_TEST_DATA_PATH: /initialUsers.json
+    volumes:
+      - "${INITIAL_BOOKS_DATA_PATH:-./initialBooks.json}:/initialBooks.json"
+      - "${INITIAL_USERS_DATA_PATH:-./initialUsers.json}:/initialUsers.json"
     ports:
       - 8080:8080

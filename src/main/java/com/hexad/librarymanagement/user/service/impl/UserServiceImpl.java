@@ -9,6 +9,7 @@ import com.hexad.librarymanagement.user.domain.User;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
 import com.hexad.librarymanagement.user.repository.UserRepository;
 import com.hexad.librarymanagement.user.service.UserService;
+import com.hexad.librarymanagement.user.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,5 +49,10 @@ public class UserServiceImpl implements UserService {
         books.forEach(user::returnBook);
         userRepository.save(user);
         return bookMapper.mapBookDtoListFrom(user.getBorrowedBookList());
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return null;
     }
 }
