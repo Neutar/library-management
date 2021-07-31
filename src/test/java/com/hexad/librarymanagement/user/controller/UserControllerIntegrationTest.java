@@ -5,6 +5,7 @@ import com.hexad.librarymanagement.book.domain.Book;
 import com.hexad.librarymanagement.book.repository.BookRepository;
 import com.hexad.librarymanagement.common.IntegrationTestBase;
 import com.hexad.librarymanagement.common.controller.response.ErrorResponse;
+import com.hexad.librarymanagement.user.controller.response.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -182,6 +183,33 @@ public class UserControllerIntegrationTest extends IntegrationTestBase {
         Optional<Book> book = bookRepository.findById(bookId);
         assertTrue(book.isPresent());
         assertEquals(count, book.get().getCopyCount());
+    }
+
+    @Test
+    void getUsers_shouldReturnEmptyArray_whenThereIsNoUser() {
+        ResponseEntity<UserResponse[]> response =
+                restTemplate.getForEntity(
+                        "http://localhost:" + port + "/api/user",
+                        UserResponse[].class);
+        UserResponse[] users = response.getBody();
+        assertEquals(0, users.length);
+    }
+
+    @Test
+    @Sql(scripts={"/sql/add_ron_weasley_user.sql",
+            "/sql/add_borrowed_harry_potter_book.sql"})
+    void getUsers_shouldReturnUserList_whenThereAreUsers() {
+
+        ResponseEntity<UserResponse[]> response =
+                restTemplate.getForEntity(
+                        "http://localhost:" + port + "/api/user",
+                        UserResponse[].class);
+        UserResponse[] users = response.getBody();
+        assertNotNull(users);
+        assertEquals(1, users.length);
+        assertEquals("eb7c0d14-e2b8-4108-b0e7-d139ce53bd0e", users[0].getId().toString());
+        assertEquals("Ron Weasley", users[0].getName());
+        assertEquals(1, users[0].getBorrowedBookList().size());
     }
 
 }

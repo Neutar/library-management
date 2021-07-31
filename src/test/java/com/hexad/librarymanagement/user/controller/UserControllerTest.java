@@ -5,21 +5,25 @@ import com.hexad.librarymanagement.book.controller.response.BookResponse;
 import com.hexad.librarymanagement.book.exception.BookNotBorrowedException;
 import com.hexad.librarymanagement.book.exception.BookNotFoundException;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
+import com.hexad.librarymanagement.user.controller.response.UserResponse;
+import com.hexad.librarymanagement.user.domain.User;
 import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
 import com.hexad.librarymanagement.user.service.UserService;
+import com.hexad.librarymanagement.user.service.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static com.hexad.librarymanagement.utils.TestUtils.buildBookDto;
+import static com.hexad.librarymanagement.utils.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -164,6 +168,36 @@ class UserControllerTest {
 
         //then:
         verify(userService).returnBook(userId, Collections.singletonList(bookId));
+    }
+
+    @Test
+    void getUsers_shouldReturnEmptyList_whenThereIsNoUser() {
+        //given:
+        when(userService.getAllUsers()).thenReturn(Collections.emptyList());
+
+        //when:
+        List<UserResponse> resultUserList = userController.getAllUsers();
+
+        //then:
+        assertNotNull(resultUserList);
+        assertEquals(0, resultUserList.size());
+        verify(userService).getAllUsers();
+    }
+
+    @Test
+    void getUsers_shouldReturnListOfAllBooks_whenThereAreUsers() {
+        //given:
+        List<UserDto> userDtoList = Arrays.asList(buildUserDto(UUID.randomUUID(), "Ron Weasley"),
+                buildUserDto(UUID.randomUUID(), "Professor Albus Dumbledore"));
+        when(userService.getAllUsers()).thenReturn(userDtoList);
+
+        //when:
+        List<UserResponse> resultUserList = userController.getAllUsers();
+
+        //then:
+        assertNotNull(resultUserList);
+        assertEquals(2, resultUserList.size());
+        assertThat(resultUserList).usingRecursiveFieldByFieldElementComparator().isEqualTo(userDtoList);
     }
 
 }

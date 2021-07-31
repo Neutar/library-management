@@ -3,6 +3,7 @@ package com.hexad.librarymanagement.utils;
 import com.hexad.librarymanagement.book.domain.Book;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import com.hexad.librarymanagement.user.domain.User;
+import com.hexad.librarymanagement.user.service.dto.UserDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,9 @@ public class TestUtils {
 
     public static User buildUser(UUID userId, String userName, Book... books) {
         return User.builder().id(userId).name(userName).borrowedBookList(new ArrayList<>(Arrays.asList(books))).build();
+    }
+
+    public static UserDto buildUserDto(UUID userId, String userName, Book... books) {
+        return UserDto.builder().id(userId).name(userName).borrowedBookList(new ArrayList<>(Arrays.asList(books))).build();
     }
 }

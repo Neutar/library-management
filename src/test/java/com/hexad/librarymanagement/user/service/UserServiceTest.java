@@ -10,6 +10,7 @@ import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookExcepti
 import com.hexad.librarymanagement.user.exception.ExceededBorrowedBookLimitException;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
 import com.hexad.librarymanagement.user.repository.UserRepository;
+import com.hexad.librarymanagement.user.service.dto.UserDto;
 import com.hexad.librarymanagement.user.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
+import static com.hexad.librarymanagement.utils.TestUtils.buildUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -199,6 +201,37 @@ class UserServiceTest {
         verify(userRepository).findById(userId);
         verifyNoInteractions(bookRepository);
         verifyNoMoreInteractions(userRepository);
+    }
+
+    @Test
+    void getUsers_shouldReturnEmptyList_whenThereIsNoUser() {
+        //given:
+        when(userRepository.findAll()).thenReturn(Collections.emptyList());
+
+        //when:
+        List<UserDto> userDtoList = userService.getAllUsers();
+
+        //then:
+        assertNotNull(userDtoList);
+        assertEquals(0, userDtoList.size());
+        verify(userRepository).findAll();
+    }
+
+    @Test
+    void getUsers_shouldReturnListOfAllBooks_whenThereAreUsers() {
+        //given:
+        List<User> userList = Arrays.asList(buildUser(UUID.randomUUID(),"Ron Weasley"),
+                buildUser(UUID.randomUUID(), "Professor Albus Dumbledore"));
+        when(userRepository.findAll()).thenReturn(userList);
+
+        //when:
+        List<UserDto> userDtoList = userService.getAllUsers();
+
+        //then:
+        assertNotNull(userDtoList);
+        assertEquals(2, userDtoList.size());
+        assertThat(userDtoList).usingRecursiveFieldByFieldElementComparator().isEqualTo(userList);
+        verify(userRepository).findAll();
     }
 
 }
