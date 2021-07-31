@@ -7,10 +7,7 @@ import com.hexad.librarymanagement.user.mapper.UserMapper;
 import com.hexad.librarymanagement.user.repository.UserRepository;
 import com.hexad.librarymanagement.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,5 +23,11 @@ public class UserController {
     @PutMapping("/{userId}/book/{bookId}")
     public List<BookResponse> borrowBook(@PathVariable UUID userId, @PathVariable UUID bookId) {
         return bookMapper.mapBookResponseListFrom(userService.borrowBook(userId, bookId));
+    }
+
+
+    @PostMapping("/{userId}/book/return")
+    public List<BookResponse> returnBook(@PathVariable UUID userId, @RequestBody List<UUID> bookIds) {
+        return bookMapper.mapBookResponseListFrom(userService.returnBook(userId, bookIds));
     }
 }

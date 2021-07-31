@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import static com.hexad.librarymanagement.utils.TestUtils.buildBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
 
@@ -20,5 +19,17 @@ class BookTest {
 
         //then:
         assertEquals(2, book.getCopyCount());
+    }
+
+    @Test
+    void returnBook_shouldIncreaseCopyCountById_whenThereIsABook(){
+       //given:
+       Book book = buildBook(UUID.randomUUID(), "Lord of the rings", "J.R.R. Tolkien", "9780007141326", 2L);
+
+       //when:
+        book.returnBook();
+
+        //then:
+        assertEquals(3, book.getCopyCount());
     }
 }

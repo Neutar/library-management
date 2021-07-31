@@ -7,7 +7,6 @@ import com.hexad.librarymanagement.book.repository.BookRepository;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import com.hexad.librarymanagement.user.domain.User;
 import com.hexad.librarymanagement.user.exception.UserNotFoundException;
-import com.hexad.librarymanagement.user.mapper.UserMapper;
 import com.hexad.librarymanagement.user.repository.UserRepository;
 import com.hexad.librarymanagement.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,20 @@ public class UserServiceImpl implements UserService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(BookNotFoundException::new);
         user.borrowBook(book);
+        userRepository.save(user);
+        return bookMapper.mapBookDtoListFrom(user.getBorrowedBookList());
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<BookDto> returnBook(UUID userId, List<UUID> bookIdList) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        List<Book> books = bookRepository.findAllById(bookIdList);
+        if(bookIdList.stream().anyMatch(id -> books.stream().map(Book::getId).noneMatch(bookId-> bookId.equals(id)))) {
+            throw new BookNotFoundException();
+        }
+        books.forEach(user::returnBook);
         userRepository.save(user);
         return bookMapper.mapBookDtoListFrom(user.getBorrowedBookList());
     }

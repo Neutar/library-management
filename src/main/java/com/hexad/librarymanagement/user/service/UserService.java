@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface UserService {
     List<BookDto> borrowBook(UUID userId, UUID bookId);
+
+    List<BookDto> returnBook(UUID userId, List<UUID> bookIdList);
 }

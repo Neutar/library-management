@@ -2,6 +2,7 @@ package com.hexad.librarymanagement.user.controller;
 
 
 import com.hexad.librarymanagement.book.controller.response.BookResponse;
+import com.hexad.librarymanagement.book.exception.BookNotBorrowedException;
 import com.hexad.librarymanagement.book.exception.BookNotFoundException;
 import com.hexad.librarymanagement.book.service.dto.BookDto;
 import com.hexad.librarymanagement.user.exception.AlreadyBorrowedSameBookException;
@@ -105,4 +106,64 @@ class UserControllerTest {
         //then:
         verify(userService).borrowBook(userId, bookId);
     }
+
+    @Test
+    void returnBook_shouldReturnBorrowedBookList_whenTheBookExistsInTheBookBorrowedList(){
+        //given:
+        UUID userId = UUID.randomUUID();
+        List<UUID> bookIds = Collections.singletonList(UUID.randomUUID());
+        when(userService.returnBook(userId, bookIds)).thenReturn(Collections.emptyList());
+
+        //when:
+        List<BookResponse> bookResponseList = userController.returnBook(userId, bookIds);
+
+        //then:
+        verify(userService).returnBook(userId, bookIds);
+        assertEquals(0, bookResponseList.size());
+    }
+
+
+    @Test
+    void returnBook_shouldThrowBookNotBorrowedException_whenUserNotBorrowedBook() {
+        //given:
+        UUID userId = UUID.randomUUID();
+        List<UUID> bookIds = Collections.singletonList(UUID.randomUUID());
+        when(userService.returnBook(userId,bookIds)).thenThrow(BookNotBorrowedException.class);
+
+        //when:
+        assertThrows(BookNotBorrowedException.class, () -> userController.returnBook(userId, bookIds));
+
+        //then:
+        verify(userService).returnBook(userId, bookIds);
+    }
+
+    @Test
+    void returnBook_shouldThrowBookNotFoundException_whenBookWasNotFound() {
+        //given:
+        UUID userId = UUID.randomUUID();
+        UUID bookId = UUID.randomUUID();
+        when(userService.returnBook(userId, Collections.singletonList(bookId))).thenThrow(BookNotFoundException.class);
+
+        //when:
+        assertThrows(BookNotFoundException.class, () -> userController.returnBook(userId, Collections.singletonList(bookId)));
+
+        //then:
+        verify(userService).returnBook(userId, Collections.singletonList(bookId));
+    }
+
+
+    @Test
+    void returnBook_shouldReturnUserNotFoundException_whenTheUserIsNotExists() {
+        //given:
+        UUID userId = UUID.randomUUID();
+        UUID bookId = UUID.randomUUID();
+        when(userService.returnBook(userId, Collections.singletonList(bookId))).thenThrow(UserNotFoundException.class);
+
+        //when:
+        assertThrows(UserNotFoundException.class, () -> userController.returnBook(userId, Collections.singletonList(bookId)));
+
+        //then:
+        verify(userService).returnBook(userId, Collections.singletonList(bookId));
+    }
+
 }
