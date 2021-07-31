@@ -29,6 +29,13 @@ To use create more you can either edit those files or create a file on your syst
 
 ### Endpoints
 
+#### Initialize Test Data For Users And Books
+
+```
+curl --request POST \
+--url http://localhost:8080/api/initialize
+```
+
 #### List all users
 ```
 curl --request GET \
